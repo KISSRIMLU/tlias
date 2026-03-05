@@ -1,0 +1,30 @@
+package com.chq.mapper;
+
+import com.chq.pojo.Emp;
+import com.chq.pojo.EmpQueryParam;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+
+/**
+ * @author Ricardo
+ * @since 2026/3/5 21:20
+ */
+
+@Mapper
+public interface EmpMapper {
+//------------------原始分页查询实现
+//    @Select("select count(*) from  emp e left join dept d on e.dept_id=d.id")
+//    public Long count();
+
+//    @Select("select e.* ,d.name as deptName from emp e left join dept d on e.dept_id=d.id " +
+//            "order by e.update_time desc limit #{start},#{pageSize}")
+//    public List<Emp> list(Integer start, Integer pageSize);
+
+    //---------------------------PageHelper 分页查询实现
+
+
+     List<Emp> list(EmpQueryParam empQueryParam);
+
+}

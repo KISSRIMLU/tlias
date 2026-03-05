@@ -57,7 +57,7 @@ public class DeptController {
 
     //修改部门
     @PutMapping()
-    public Result uppdate(@RequestBody Dept dept){
+    public Result update(@RequestBody Dept dept){
         log.info("修改部门, dept: {}" , dept);
         deptService.update(dept);
         return Result.success();
