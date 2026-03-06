@@ -2,8 +2,10 @@ package com.chq.mapper;
 
 import com.chq.pojo.Emp;
 import com.chq.pojo.EmpQueryParam;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Options;
+
 
 import java.util.List;
 
@@ -25,6 +27,10 @@ public interface EmpMapper {
     //---------------------------PageHelper 分页查询实现
 
 
-     List<Emp> list(EmpQueryParam empQueryParam);
+    List<Emp> list(EmpQueryParam empQueryParam);
 
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
+            "values (#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
+    void inster(Emp emp);
 }

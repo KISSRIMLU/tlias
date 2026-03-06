@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Ricardo
@@ -42,4 +43,6 @@ public class Emp {
     private String deptName;
     //部门名称
 
+    //封装员工工作经历信息
+    private List<EmpExpr> exprList;
 }

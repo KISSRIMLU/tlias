@@ -7,11 +7,9 @@ import com.chq.pojo.Result;
 import com.chq.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 /**
  * @author Ricardo
@@ -24,11 +22,20 @@ public class EmpController {
     @Autowired
     private EmpService empService;
 
+
     @GetMapping("/emps")
     public Result page(EmpQueryParam empQueryParam) {
         log.info("分页查询:{}", empQueryParam);
         PageResult<Emp> pageResult = empService.page(empQueryParam);
         return Result.success(pageResult);
+    }
+
+    /*工作经路*/
+    @PostMapping("/emps")
+    public Result seave(@RequestBody Emp emp){
+        log.info("保存员工:{}", emp);
+        empService.save(emp);
+        return Result.success();
     }
 
 }

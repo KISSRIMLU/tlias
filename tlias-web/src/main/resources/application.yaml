@@ -2,14 +2,32 @@ spring:
   application:
     name: tlias-web
 
-  #mysql连接配置
+  # Spring Boot 数据源配置，用于连接 MySQL 数据库
+  # 配置数据库驱动、连接 URL、用户名和密码
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/tlias
     username: root
     password: 246888
 
+  # MyBatis 配置
+  # 配置 MyBatis 日志实现为 STDOUT，用于在控制台输出 SQL 语句和参数信息
+  # 开启驼峰命名映射，自动将数据库的下划线字段（如 user_name）映射到 Java 的驼峰属性（如 userName）
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+
+  # PageHelper 分页插件配置
+  # 启用分页合理化参数，自动处理分页参数的合理性（如页码小于 1 时查询第一页）
+  # 指定使用 MySQL 方言进行分页查询
+pagehelper:
+  reasonable: true
+  helper-dialect: mysql
+
+
+  # 配置 Spring JDBC 事务管理器的日志级别为 DEBUG
+  # 用于在控制台详细输出事务管理的执行过程，包括事务的开启、提交和回滚等操作
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug

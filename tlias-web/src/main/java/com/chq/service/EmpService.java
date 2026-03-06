@@ -4,7 +4,6 @@ import com.chq.pojo.Emp;
 import com.chq.pojo.EmpQueryParam;
 import com.chq.pojo.PageResult;
 
-import java.util.List;
 
 /**
  * @author Ricardo
@@ -14,4 +13,6 @@ public interface EmpService {
 
 
     PageResult<Emp> page(EmpQueryParam empQueryParam);
+
+    void save(Emp emp);
 }
