@@ -67,6 +67,15 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>1.4.7</version>
         </dependency>
+
+        <!-- Source: https://mvnrepository.com/artifact/com.aliyun/alibabacloud-oss-v2 -->
+        <!--阿里云OSS依赖-->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>alibabacloud-oss-v2</artifactId>
+            <version>0.3.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
