@@ -1,5 +1,6 @@
 package com.chq.mapper;
 
+
 import com.chq.pojo.EmpExpr;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +17,13 @@ public interface EmpExprMapper {
      * 批量插入员工工作经历信息
      */
     void insertBatch(List<EmpExpr> exprList);
+
+
+    /**
+     * 删除员工工作经历信息
+     */
+    void deleteEmpExpr(List<Integer> ids);
+
+
+
 }

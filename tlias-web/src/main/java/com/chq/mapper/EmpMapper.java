@@ -25,12 +25,19 @@ public interface EmpMapper {
 //    public List<Emp> list(Integer start, Integer pageSize);
 
     //---------------------------PageHelper 分页查询实现
-
-
     List<Emp> list(EmpQueryParam empQueryParam);
+
+
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
             "values (#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
     void inster(Emp emp);
+
+    void deleteEmp(List<Integer> ids);
+
+    Emp getById(Integer id);
+
+    //根据 ID 修改员工信息
+    void updateById(Emp emp);
 }

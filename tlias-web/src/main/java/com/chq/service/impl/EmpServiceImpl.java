@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -75,6 +78,40 @@ public class EmpServiceImpl implements EmpService {
             //插入操作日志，设置传播性：propagation = Propagation.REQUIRES_NEW
             EmpLog emplog = new EmpLog(null, LocalDateTime.now(), emp.toString());
             empLogService.insertLog(emplog);
+        }
+    }
+
+    @Override
+    public void deleteEmp(List<Integer> ids) {
+
+        empExprMapper.deleteEmpExpr(ids);
+
+        empMapper.deleteEmp(ids);
+    }
+
+
+    @Override
+    public Emp getInfo(Integer id) {
+        return empMapper.getById(id);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void update(Emp emp) {
+        //1,根据ID修改员工信息
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+
+        //2,1删除员工工作经历
+        // Collections.singletonList(元素)//将单个元素转换成List
+        // Arrays.asList(数组)//将数组转换成List
+        empExprMapper.deleteEmpExpr(Arrays.asList(emp.getId()));
+
+        //2,2添加员工工作经历
+        List<EmpExpr> exprList = emp.getExprList();
+        if (!CollectionUtils.isEmpty(exprList)) {
+            exprList.forEach(empExpr -> empExpr.setEmpId(emp.getId()));
+            empExprMapper.insertBatch(exprList);
         }
     }
 }
