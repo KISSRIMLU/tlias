@@ -3,16 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.chq.mapper.ClazzMapper">
-    <select id="findAllClazz" resultType="com.chq.pojo.Clazz">
-        SELECT clz.*,                  -- 班级表所有字段
-               e.name  AS master_name, -- 负责人姓名（别名区分）
-               -- 动态计算班级状态：CASE WHEN 必须放在 SELECT 字段列表中
+    <select id="findClazz" resultType="com.chq.pojo.Clazz">
+        SELECT clz.*,
+               e.name AS master_name,
                CASE
-                   WHEN clz.begin_date > NOW() THEN '未开班' -- 开班时间在未来：未开班
-                   WHEN NOW() > clz.end_date THEN '已结课' -- 当前时间超过结课时间：已结课
-                   ELSE '在读' -- 其余情况：在读
-                   END AS status       -- 状态字段别名
-        FROM clazz AS clz -- 主表：班级表
-                 LEFT JOIN emp AS e ON e.id = clz.master_id
+                   WHEN clz.begin_date > NOW() THEN '未开班'
+                   WHEN NOW() > clz.end_date THEN '已结课'
+                   ELSE '在读'
+               END AS status
+        FROM clazz AS clz
+        LEFT JOIN emp AS e ON e.id = clz.master_id
+        <where>
+            <if test="name != null and name != ''">
+                AND clz.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="begin != null and end !=null">
+                AND clz.end_date between #{begin} and #{end}
+            </if>
+        </where>
+        ORDER BY clz.update_time DESC
     </select>
 </mapper>

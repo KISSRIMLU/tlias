@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -39,4 +40,10 @@ public class Clazz {
     //班主任姓名
     private String status;
     //班级状态 - 未开班 , 在读 , 已结课
+
+    private Integer page = 1;
+    //页码
+    private Integer pageSize = 10;
+    //每页展示记录数
+
 }

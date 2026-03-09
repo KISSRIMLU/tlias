@@ -5,6 +5,7 @@ import com.chq.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Select;
 
 
 import java.util.List;
@@ -40,4 +41,7 @@ public interface EmpMapper {
 
     //根据 ID 修改员工信息
     void updateById(Emp emp);
+
+    @Select("select id,name,username from emp")
+    List<Emp> getEmpList();
 }

@@ -1,8 +1,10 @@
 package com.chq.mapper;
 
 
+import com.chq.pojo.Emp;
 import com.chq.pojo.EmpExpr;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -23,7 +25,4 @@ public interface EmpExprMapper {
      * 删除员工工作经历信息
      */
     void deleteEmpExpr(List<Integer> ids);
-
-
-
 }
