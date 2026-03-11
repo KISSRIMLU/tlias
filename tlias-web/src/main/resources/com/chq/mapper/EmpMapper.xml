@@ -83,4 +83,19 @@
         from emp e left join emp_expr ee on e.id = ee.emp_id
         where e.id = #{id}
     </select>
+
+    <select id="getEmpJobData" resultType="java.util.Map">
+        SELECT (CASE
+                    WHEN job = 1 THEN '班主任'
+                    WHEN job = 2 THEN '讲师'
+                    WHEN job = 3 THEN '学工主管'
+                    WHEN job = 4 THEN '教研主管'
+                    WHEN job = 5 THEN '咨询师'
+                    ELSE '其他' END) AS job,
+               COUNT(*)              AS count
+        FROM emp
+        GROUP BY job
+        ORDER BY count
+    </select>
+
 </mapper>

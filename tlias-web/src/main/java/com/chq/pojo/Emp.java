@@ -45,4 +45,6 @@ public class Emp {
 
     //封装员工工作经历信息
     private List<EmpExpr> exprList;
+
+    private  String token;
 }

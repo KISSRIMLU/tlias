@@ -5,6 +5,7 @@ import com.chq.mapper.EmpMapper;
 import com.chq.pojo.*;
 import com.chq.service.EmpLogService;
 import com.chq.service.EmpService;
+import com.chq.utils.JwtUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ricardo
@@ -115,7 +118,30 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public List<Emp> getEmpList() {
-        List<Emp> empList=empMapper.getEmpList();
+        List<Emp> empList = empMapper.getEmpList();
         return empList;
+    }
+
+    @Override
+    public LoginInfo login(Emp emp) {
+        // 调用 Mapper 查询数据库验证用户名和密码
+        Emp empLogin = empMapper.getByUsernameAndPassword(emp);
+        
+        // 验证失败，返回 null
+        if (empLogin == null) {
+            return null;
+        }
+        
+        // 构建 JWT 声明数据，包含员工 ID 和用户名
+        Map<String, Object> dateMap = new HashMap<>();
+        dateMap.put("id", empLogin.getId());
+        dateMap.put("username", empLogin.getUsername());
+        
+        // 使用 JwtUtils 生成 JWT 令牌
+        String jwt =JwtUtils.generateJwt(dateMap);
+
+        // 封装登录信息并返回
+        LoginInfo loginInfo = new LoginInfo(empLogin.getId(), empLogin.getUsername(), empLogin.getName(), jwt);
+        return loginInfo;
     }
 }

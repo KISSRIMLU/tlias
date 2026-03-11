@@ -2,9 +2,11 @@ package com.chq.service;
 
 import com.chq.pojo.Emp;
 import com.chq.pojo.EmpQueryParam;
+import com.chq.pojo.LoginInfo;
 import com.chq.pojo.PageResult;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -25,4 +27,7 @@ public interface EmpService {
     void update(Emp emp);
 
     List<Emp> getEmpList();
+
+
+    LoginInfo login(Emp emp);
 }

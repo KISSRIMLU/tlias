@@ -2,13 +2,11 @@ package com.chq.mapper;
 
 import com.chq.pojo.Emp;
 import com.chq.pojo.EmpQueryParam;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Ricardo
@@ -29,7 +27,6 @@ public interface EmpMapper {
     List<Emp> list(EmpQueryParam empQueryParam);
 
 
-
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time) " +
             "values (#{username},#{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime})")
@@ -44,4 +41,15 @@ public interface EmpMapper {
 
     @Select("select id,name,username from emp")
     List<Emp> getEmpList();
+
+    @MapKey("job")
+    List<Map<String, Object>> getEmpJobData();
+
+    @Select("select if (gender=1,'男', '女') as name,count(gender) as value from emp group by gender")
+    @MapKey("name")
+    List<Map> countEmpGenderData();
+
+
+    @Select("select * from emp where username=#{username} and password=#{password}")
+    Emp getByUsernameAndPassword(Emp emp);
 }
