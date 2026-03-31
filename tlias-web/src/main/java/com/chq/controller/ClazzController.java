@@ -29,6 +29,7 @@ public class ClazzController {
         PageResult<Clazz> clazzList = clazzServiceImpl.findClazz(clazzQueryParam);
         return Result.success(clazzList);
     }
+
     @LogOperation
     @DeleteMapping("/{id}")
     public Result deleteClazz(@PathVariable Integer id) {
@@ -44,6 +45,7 @@ public class ClazzController {
         clazzServiceImpl.addClazz(clazz);
         return Result.success();
     }
+
     @LogOperation
     @GetMapping("/{id}")
     public Result getById(@PathVariable Integer id) {
@@ -51,6 +53,7 @@ public class ClazzController {
         Clazz clazzInfo = clazzServiceImpl.getInfo(id);
         return Result.success(clazzInfo);
     }
+
     @LogOperation
     @PutMapping
     public Result updateClass(@RequestBody Clazz clazz) {
@@ -58,6 +61,7 @@ public class ClazzController {
         clazzServiceImpl.updateClass(clazz);
         return Result.success();
     }
+
     @LogOperation
     @GetMapping("/list")
     public Result list() {
